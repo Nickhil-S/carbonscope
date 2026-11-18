@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as NewRouteImport } from './routes/new'
+import { Route as RecommendationsRouteImport } from './routes/recommendations'
+import { Route as SimulatorRouteImport } from './routes/simulator'
+import { Route as AssessmentsIndexRouteImport } from './routes/assessments.index'
+import { Route as AssessmentsShareIdRouteImport } from './routes/assessments.$shareId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewRoute = NewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecommendationsRoute = RecommendationsRouteImport.update({
+  id: '/recommendations',
+  path: '/recommendations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimulatorRoute = SimulatorRouteImport.update({
+  id: '/simulator',
+  path: '/simulator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentsIndexRoute = AssessmentsIndexRouteImport.update({
+  id: '/assessments/',
+  path: '/assessments/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentsShareIdRoute = AssessmentsShareIdRouteImport.update({
+  id: '/assessments/$shareId',
+  path: '/assessments/$shareId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/map': typeof MapRoute
+  '/new': typeof NewRoute
+  '/recommendations': typeof RecommendationsRoute
+  '/simulator': typeof SimulatorRoute
+  '/assessments/$shareId': typeof AssessmentsShareIdRoute
+  '/assessments/': typeof AssessmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/map': typeof MapRoute
+  '/new': typeof NewRoute
+  '/recommendations': typeof RecommendationsRoute
+  '/simulator': typeof SimulatorRoute
+  '/assessments/$shareId': typeof AssessmentsShareIdRoute
+  '/assessments': typeof AssessmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/map': typeof MapRoute
+  '/new': typeof NewRoute
+  '/recommendations': typeof RecommendationsRoute
+  '/simulator': typeof SimulatorRoute
+  '/assessments/$shareId': typeof AssessmentsShareIdRoute
+  '/assessments/': typeof AssessmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/map'
+    | '/new'
+    | '/recommendations'
+    | '/simulator'
+    | '/assessments/$shareId'
+    | '/assessments/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/map'
+    | '/new'
+    | '/recommendations'
+    | '/simulator'
+    | '/assessments/$shareId'
+    | '/assessments'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/map'
+    | '/new'
+    | '/recommendations'
+    | '/simulator'
+    | '/assessments/$shareId'
+    | '/assessments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  MapRoute: typeof MapRoute
+  NewRoute: typeof NewRoute
+  RecommendationsRoute: typeof RecommendationsRoute
+  SimulatorRoute: typeof SimulatorRoute
+  AssessmentsShareIdRoute: typeof AssessmentsShareIdRoute
+  AssessmentsIndexRoute: typeof AssessmentsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new': {
+      id: '/new'
+      path: '/new'
+      fullPath: '/new'
+      preLoaderRoute: typeof NewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recommendations': {
+      id: '/recommendations'
+      path: '/recommendations'
+      fullPath: '/recommendations'
+      preLoaderRoute: typeof RecommendationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulator': {
+      id: '/simulator'
+      path: '/simulator'
+      fullPath: '/simulator'
+      preLoaderRoute: typeof SimulatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessments/': {
+      id: '/assessments/'
+      path: '/assessments'
+      fullPath: '/assessments/'
+      preLoaderRoute: typeof AssessmentsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessments/$shareId': {
+      id: '/assessments/$shareId'
+      path: '/assessments/$shareId'
+      fullPath: '/assessments/$shareId'
+      preLoaderRoute: typeof AssessmentsShareIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  MapRoute: MapRoute,
+  NewRoute: NewRoute,
+  RecommendationsRoute: RecommendationsRoute,
+  SimulatorRoute: SimulatorRoute,
+  AssessmentsShareIdRoute: AssessmentsShareIdRoute,
+  AssessmentsIndexRoute: AssessmentsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

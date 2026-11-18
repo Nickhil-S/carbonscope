@@ -65,7 +65,7 @@ export default function MapView({
     fg.clearLayers();
     if (boundary) {
       const g = L.geoJSON(boundary, { style: { color: "#2f7d55", weight: 2, fillOpacity: 0.15 } });
-      g.eachLayer((l) => fg.addLayer(l));
+      g.eachLayer((l: L.Layer) => fg.addLayer(l));
       const b = fg.getBounds();
       if (b.isValid()) m.fitBounds(b, { padding: [24, 24] });
     }

@@ -16,7 +16,7 @@ export const Route = createFileRoute("/new")({
 
 type Unit = keyof typeof AREA_UNITS;
 
-function NumField({ label, value, onChange, suffix, error }: { label: string; value: number; onChange: (n: number) => void; suffix?: string; error?: string }) {
+function NumField({ label, value, onChange, suffix, error }: { label: string; value: number; onChange: (n: number) => void; suffix?: string; error?: string | undefined }) {
   return (
     <div className="grid gap-1.5">
       <Label className="text-xs">{label}</Label>
@@ -34,7 +34,7 @@ function NewAssessment() {
   const nav = useNavigate();
   const [f, setF] = useState<Draft>(draft);
   const [unit, setUnit] = useState<Unit>("ha");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<string, string>>>({});
   useEffect(() => setF(draft), [draft]);
 
   const set = (p: Partial<ActivityInputs>) => setF((s) => ({ ...s, isDemo: false, inputs: { ...s.inputs, ...p } }));
@@ -47,7 +47,7 @@ function NewAssessment() {
     const v = validateInputs(i);
     if (!v.success) v.error.issues.forEach((iss) => (errs[iss.path.join(".")] = iss.message));
     setErrors(errs);
-    if (Object.keys(errs).length) return toast.error("Please fix the highlighted fields");
+    if (Object.keys(errs).length) { toast.error("Please fix the highlighted fields"); return; }
     setDraft({ ...f, inputs: v.data! });
     nav({ to: "/dashboard" });
   }
@@ -66,8 +66,8 @@ function NewAssessment() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="grid gap-1.5 md:col-span-2">
               <Label className="text-xs">Assessment title</Label>
-              <Input value={f.title} maxLength={120} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="e.g. North Campus 2026 baseline" aria-invalid={!!errors.title} />
-              {errors.title && <p className="text-xs text-destructive">{errors.title}</p>}
+              <Input value={f.title} maxLength={120} onChange={(e) => setF({ ...f, title: e.target.value })} placeholder="e.g. North Campus 2026 baseline" aria-invalid={!!errors["title"]} />
+              {errors["title"] && <p className="text-xs text-destructive">{errors["title"]}</p>}
             </div>
             <div className="grid gap-1.5">
               <Label className="text-xs">Scale</Label>
@@ -97,16 +97,16 @@ function NewAssessment() {
                 </Select>
               </div>
             </div>
-            <NumField label="Population / occupants" value={i.population} onChange={(n) => set({ population: n })} error={errors.population} />
+            <NumField label="Population / occupants" value={i.population} onChange={(n) => set({ population: n })} error={errors["population"]} />
             <div className="flex items-end"><Button asChild variant="outline" className="w-full"><Link to="/map">Select area on map</Link></Button></div>
           </div>
         </Panel>
 
         <Panel title="Electricity & water (monthly)">
           <div className="grid gap-4 md:grid-cols-3">
-            <NumField label="Electricity consumption" suffix="kWh" value={i.electricityKwh} onChange={(n) => set({ electricityKwh: n })} error={errors.electricityKwh} />
-            <NumField label="Water consumption" suffix="litres" value={i.waterLitres} onChange={(n) => set({ waterLitres: n })} error={errors.waterLitres} />
-            <NumField label="Annual rainfall" suffix="mm" value={i.rainfallMm} onChange={(n) => set({ rainfallMm: n })} error={errors.rainfallMm} />
+            <NumField label="Electricity consumption" suffix="kWh" value={i.electricityKwh} onChange={(n) => set({ electricityKwh: n })} error={errors["electricityKwh"]} />
+            <NumField label="Water consumption" suffix="litres" value={i.waterLitres} onChange={(n) => set({ waterLitres: n })} error={errors["waterLitres"]} />
+            <NumField label="Annual rainfall" suffix="mm" value={i.rainfallMm} onChange={(n) => set({ rainfallMm: n })} error={errors["rainfallMm"]} />
           </div>
         </Panel>
 
@@ -133,7 +133,7 @@ function NewAssessment() {
               <NumField key={k} label={l} suffix="%" value={i.landUse[k]} onChange={(n) => set({ landUseSource: "user", landUse: { ...i.landUse, [k]: n } })} error={errors[`landUse.${k}`]} />
             ))}
           </div>
-          {errors.landUse && <p className="mt-2 text-sm text-destructive">{errors.landUse}</p>}
+          {errors["landUse"] && <p className="mt-2 text-sm text-destructive">{errors["landUse"]}</p>}
         </Panel>
 
         <div className="flex justify-end gap-2">

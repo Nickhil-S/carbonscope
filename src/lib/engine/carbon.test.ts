@@ -27,7 +27,7 @@ describe("Stage 02 – calculation", () => {
 
 describe("Stage 03 – hotspots", () => {
   it("ranks electricity first when it dominates", () => {
-    expect(calculateEmissions(base).hotspots[0].key).toBe("electricity");
+    expect(calculateEmissions(base).hotspots[0]?.key).toBe("electricity");
   });
 });
 
@@ -41,6 +41,6 @@ describe("Stage 05 – recommendations", () => {
   it("is sorted by score and has positive savings", () => {
     const recs = buildRecommendations(DEMO_INPUTS);
     expect(recs.length).toBeGreaterThan(3);
-    for (let k = 1; k < recs.length; k++) expect(recs[k - 1].score).toBeGreaterThanOrEqual(recs[k].score);
+    for (let k = 1; k < recs.length; k++) expect(recs[k - 1]!.score).toBeGreaterThanOrEqual(recs[k]!.score);
   });
 });

@@ -10,7 +10,7 @@ import { Assistant } from "@/components/cs/Assistant";
 import { kg, num, pct } from "@/lib/format";
 
 export const Route = createFileRoute("/simulator")({
-  head: () => ({ meta: [{ title: "Scenario simulator — CarbonScope" }, { name: "description", content: "Adjust reduction targets and instantly see projected emission savings." }, { property: "og:title", content: "Scenario simulator — CarbonScope" }, { property: "og:description", content: "Simulate reductions in electricity, transport, waste and water." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Scenario simulator — CarbonScope" }, { name: "description", content: "Adjust reduction targets and instantly see projected emission savings." }, { property: "og:title", content: "Scenario simulator — CarbonScope" }, { property: "og:description", content: "Simulate reductions in electricity, transport, waste and water." }] }),
   component: Simulator,
 });
 
@@ -38,7 +38,7 @@ function Simulator() {
             {(Object.keys(r) as CategoryKey[]).map((k) => (
               <div key={k}>
                 <div className="mb-2 flex justify-between text-sm"><span>{CATEGORY_LABELS[k]}</span><span className="tabular font-medium">−{r[k]}%</span></div>
-                <Slider value={[r[k]]} min={0} max={100} step={1} onValueChange={([v]) => setR({ ...r, [k]: v })} aria-label={`${CATEGORY_LABELS[k]} reduction`} />
+                <Slider value={[r[k]]} min={0} max={100} step={1} onValueChange={([v]) => { if (v !== undefined) setR({ ...r, [k]: v }); }} aria-label={`${CATEGORY_LABELS[k]} reduction`} />
               </div>
             ))}
           </div>

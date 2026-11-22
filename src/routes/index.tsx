@@ -6,6 +6,8 @@ import hero from "@/assets/hero-campus.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { title: "CarbonScope — Multi-scale environmental impact assessment" },
       { name: "description", content: "Calculate carbon emissions, green cover and water indicators for a campus, city, district or country. Simulate improvements and get ranked actions." },
       { property: "og:title", content: "CarbonScope — Multi-scale environmental impact assessment" },
@@ -29,11 +31,11 @@ const SCALES = ["Country", "State", "District", "City", "Neighbourhood", "Campus
 function Landing() {
   return (
     <>
-      <section className="relative overflow-hidden bg-hero-gradient text-hero-foreground">
-        <img src={hero} alt="Aerial view of a green campus" width={1600} height={912} className="absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-luminosity" />
-        <div className="relative mx-auto max-w-7xl px-4 py-24 md:py-32">
+      <section className="relative overflow-hidden bg-hero text-hero-foreground">
+        <img src={hero} alt="Aerial view of a green campus" width={1600} height={912} className="absolute inset-0 h-full w-full object-cover opacity-60" />
+        <div className="relative mx-auto max-w-7xl px-4 py-12 md:py-16">
           <p className="tabular text-xs uppercase tracking-[0.25em] opacity-80">Environmental impact assessment</p>
-          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">Know the footprint of any place — from a campus to a country.</h1>
+          <h1 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight md:text-6xl">CarbonScope</h1>
           <p className="mt-6 max-w-xl text-lg opacity-85">CarbonScope turns electricity, travel, waste, water and land-use data into emissions, hotspots and a ranked plan to improve.</p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" variant="secondary"><Link to="/new">Start an assessment <ArrowRight className="ml-1 h-4 w-4" /></Link></Button>

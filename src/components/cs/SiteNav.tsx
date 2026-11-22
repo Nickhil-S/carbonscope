@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Leaf, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const LINKS = [
   { to: "/dashboard", label: "Dashboard" },
@@ -30,7 +31,7 @@ export function SiteNav() {
             </Link>
           ))}
         </nav>
-        <button className="lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">{open ? <X /> : <Menu />}</button>
+        <Button size="icon" variant="ghost" className="lg:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu" aria-expanded={open}>{open ? <X /> : <Menu />}</Button>
       </div>
       <nav className={cn("grid gap-1 border-t px-4 py-2 lg:hidden", !open && "hidden")}>
         {LINKS.map((l) => (

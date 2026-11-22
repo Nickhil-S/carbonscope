@@ -21,7 +21,7 @@ export function Stat({ label, value, sub, badge, className }: { label: string; v
         <p className="text-sm text-muted-foreground">{label}</p>
         {badge}
       </div>
-      <p className="tabular mt-2 text-2xl font-semibold text-foreground">{value}</p>
+      <p className="tabular mt-2 break-words text-xl font-semibold text-foreground">{value}</p>
       {sub && <p className="mt-1 text-xs text-muted-foreground">{sub}</p>}
     </div>
   );
@@ -42,7 +42,7 @@ export function SourceBadge({ kind }: { kind: keyof typeof SOURCE_STYLES }) {
 
 export function Panel({ title, children, className, actions }: { title?: ReactNode; children: ReactNode; className?: string; actions?: ReactNode }) {
   return (
-    <section className={cn("rounded-lg border bg-card p-5 shadow-card", className)}>
+    <section className={cn("min-w-0 border-t pt-5", className)}>
       {(title || actions) && (
         <div className="mb-4 flex items-center justify-between gap-2">
           {title && <h2 className="text-lg font-semibold">{title}</h2>}

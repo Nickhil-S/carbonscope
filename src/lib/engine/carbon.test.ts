@@ -41,6 +41,12 @@ describe("Stage 05 – recommendations", () => {
   it("is sorted by score and has positive savings", () => {
     const recs = buildRecommendations(DEMO_INPUTS);
     expect(recs.length).toBeGreaterThan(3);
-    for (let k = 1; k < recs.length; k++) expect(recs[k - 1]!.score).toBeGreaterThanOrEqual(recs[k]!.score);
+    for (let k = 1; k < recs.length; k++) {
+      const previous = recs[k - 1];
+      const current = recs[k];
+      if (!previous || !current) throw new Error("Missing recommendation");
+      expect(previous.score).toBeGreaterThanOrEqual(current.score);
+      expect(current.savingKgMonth).toBeGreaterThan(0);
+    }
   });
 });

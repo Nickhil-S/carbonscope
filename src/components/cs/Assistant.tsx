@@ -51,7 +51,7 @@ export function Assistant({ title, inputs, reductions }: { title: string; inputs
       <p className="mb-3 text-sm text-muted-foreground">Answers are based only on this assessment's calculated data.</p>
       <div className="mb-3 flex flex-wrap gap-2">
         {PROMPTS.map((p) => (
-          <Button key={p} size="sm" variant="secondary" disabled={busy} onClick={() => { setQ(p); run(p); }}>{p}</Button>
+          <Button key={p} size="sm" variant="secondary" className="h-auto whitespace-normal text-left" disabled={busy} onClick={() => { setQ(p); run(p); }}>{p}</Button>
         ))}
       </div>
       <form className="flex flex-col gap-2 sm:flex-row" onSubmit={(e) => { e.preventDefault(); run(q); }}>

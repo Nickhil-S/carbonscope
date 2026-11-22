@@ -9,7 +9,7 @@ import { kg, num, pct } from "@/lib/format";
 import { SaveButton } from "@/components/cs/SaveButton";
 
 export const Route = createFileRoute("/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — CarbonScope" }, { name: "description", content: "Five-stage environmental calculation pipeline for the current assessment." }, { property: "og:title", content: "Dashboard — CarbonScope" }, { property: "og:description", content: "Activity input, calculation, hotspots, scenarios and recommendations." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Dashboard — CarbonScope" }, { name: "description", content: "Five-stage environmental calculation pipeline for the current assessment." }, { property: "og:title", content: "Dashboard — CarbonScope" }, { property: "og:description", content: "Activity input, calculation, hotspots, scenarios and recommendations." }] }),
   component: Dashboard,
 });
 

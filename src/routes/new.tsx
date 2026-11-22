@@ -10,7 +10,7 @@ import { AREA_UNITS, ELECTRICITY_FACTORS, TRANSPORT_FACTORS, WASTE_FACTORS, vali
 import { PageHeader, Panel, SourceBadge } from "@/components/cs/ui";
 
 export const Route = createFileRoute("/new")({
-  head: () => ({ meta: [{ title: "New assessment — CarbonScope" }, { name: "description", content: "Enter geographical and activity data for an environmental assessment." }, { property: "og:title", content: "New assessment — CarbonScope" }, { property: "og:description", content: "Electricity, transport, waste, water and land-use inputs." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "New assessment — CarbonScope" }, { name: "description", content: "Enter geographical and activity data for an environmental assessment." }, { property: "og:title", content: "New assessment — CarbonScope" }, { property: "og:description", content: "Electricity, transport, waste, water and land-use inputs." }] }),
   component: NewAssessment,
 });
 
@@ -43,12 +43,12 @@ function NewAssessment() {
 
   function submit() {
     const errs: Record<string, string> = {};
-    if (!f.title.trim()) errs.title = "Title is required";
+    if (!f.title.trim()) errs["title"] = "Title is required";
     const v = validateInputs(i);
     if (!v.success) v.error.issues.forEach((iss) => (errs[iss.path.join(".")] = iss.message));
     setErrors(errs);
-    if (Object.keys(errs).length) { toast.error("Please fix the highlighted fields"); return; }
-    setDraft({ ...f, inputs: v.data! });
+    if (!v.success || Object.keys(errs).length) { toast.error("Please fix the highlighted fields"); return; }
+    setDraft({ ...f, inputs: v.data });
     nav({ to: "/dashboard" });
   }
 
@@ -98,7 +98,7 @@ function NewAssessment() {
               </div>
             </div>
             <NumField label="Population / occupants" value={i.population} onChange={(n) => set({ population: n })} error={errors["population"]} />
-            <div className="flex items-end"><Button asChild variant="outline" className="w-full"><Link to="/map">Select area on map</Link></Button></div>
+            <div className="flex items-end"><Button asChild variant="outline" className="w-full"><Link to="/map" onClick={() => setDraft(f)}>Select area on map</Link></Button></div>
           </div>
         </Panel>
 

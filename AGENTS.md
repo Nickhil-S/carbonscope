@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Application architecture
+- Keep environmental formulas in the versioned central engine; screens consume its results to avoid inconsistent indicators.
+- Keep map rendering in the lazy-loaded client-only map module; Leaflet requires browser APIs unavailable during server rendering.
+- Key comparison chart series by assessment ID, not title; titles can be duplicated without losing either assessment's values.
+- Disable Leaflet Draw's live area tooltip and show Turf area in the selection panel; the installed plugin's formatter throws during drawing.

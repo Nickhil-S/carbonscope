@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { kg } from "@/lib/format";
 
 export const Route = createFileRoute("/recommendations")({
-  head: () => ({ meta: [{ title: "Recommendations — CarbonScope" }, { name: "description", content: "Improvement actions ranked by savings, cost, difficulty and effort." }, { property: "og:title", content: "Recommendations — CarbonScope" }, { property: "og:description", content: "Ranked sustainability actions based on calculated results." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Recommendations — CarbonScope" }, { name: "description", content: "Improvement actions ranked by savings, cost, difficulty and effort." }, { property: "og:title", content: "Recommendations — CarbonScope" }, { property: "og:description", content: "Ranked sustainability actions based on calculated results." }] }),
   component: Recs,
 });
 

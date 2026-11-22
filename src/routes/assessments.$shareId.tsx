@@ -13,7 +13,7 @@ import { RecList } from "./recommendations";
 import { kg, num, pct } from "@/lib/format";
 
 export const Route = createFileRoute("/assessments/$shareId")({
-  head: () => ({ meta: [{ title: "Assessment report — CarbonScope" }, { name: "description", content: "Full environmental assessment report." }, { property: "og:title", content: "Assessment report — CarbonScope" }, { property: "og:description", content: "Emissions, hotspots, land use, water and recommendations." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Assessment report — CarbonScope" }, { name: "description", content: "Full environmental assessment report." }, { property: "og:title", content: "Assessment report — CarbonScope" }, { property: "og:description", content: "Emissions, hotspots, land use, water and recommendations." }] }),
   component: Details,
 });
 

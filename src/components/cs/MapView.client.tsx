@@ -42,7 +42,9 @@ export default function MapView({
     if (editable) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const D = (L as any).Control.Draw;
-      m.addControl(new D({ draw: { polygon: { allowIntersection: false, showArea: true }, rectangle: true, circle: false, circlemarker: false, marker: false, polyline: false }, edit: { featureGroup: fg, remove: false } }));
+      // The plugin's live area formatter references an undefined variable in 1.0.4.
+      // Area remains available in the selection panel through the central Turf calculation.
+      m.addControl(new D({ draw: { polygon: { allowIntersection: false, showArea: false }, rectangle: { showArea: false }, circle: false, circlemarker: false, marker: false, polyline: false }, edit: { featureGroup: fg, remove: false } }));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       m.on((L as any).Draw.Event.CREATED, (e: any) => {
         fg.clearLayers();
@@ -64,7 +66,8 @@ export default function MapView({
     if (!fg || !m) return;
     fg.clearLayers();
     if (boundary) {
-      const g = L.geoJSON(boundary, { style: { color: "#2f7d55", weight: 2, fillOpacity: 0.15 } });
+      const color = getComputedStyle(document.documentElement).getPropertyValue("--primary").trim();
+      const g = L.geoJSON(boundary, { style: { color, weight: 2, fillOpacity: 0.15 } });
       g.eachLayer((l: L.Layer) => fg.addLayer(l));
       const b = fg.getBounds();
       if (b.isValid()) m.fitBounds(b, { padding: [24, 24] });

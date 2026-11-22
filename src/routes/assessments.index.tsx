@@ -6,7 +6,7 @@ import { PageHeader, Panel, SourceBadge } from "@/components/cs/ui";
 import { kg, num } from "@/lib/format";
 
 export const Route = createFileRoute("/assessments/")({
-  head: () => ({ meta: [{ title: "Assessment archive — CarbonScope" }, { name: "description", content: "Previously saved environmental assessments." }, { property: "og:title", content: "Assessment archive — CarbonScope" }, { property: "og:description", content: "Browse saved assessments and open their reports." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Assessment archive — CarbonScope" }, { name: "description", content: "Previously saved environmental assessments." }, { property: "og:title", content: "Assessment archive — CarbonScope" }, { property: "og:description", content: "Browse saved assessments and open their reports." }] }),
   component: Archive,
 });
 

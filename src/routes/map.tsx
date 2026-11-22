@@ -12,7 +12,7 @@ import { convertArea } from "@/lib/engine/carbon";
 import { num } from "@/lib/format";
 
 export const Route = createFileRoute("/map")({
-  head: () => ({ meta: [{ title: "Interactive map — CarbonScope" }, { name: "description", content: "Search places, select campus boundaries or draw custom polygons and calculate area." }, { property: "og:title", content: "Interactive map — CarbonScope" }, { property: "og:description", content: "Geographical area selection on OpenStreetMap." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Interactive map — CarbonScope" }, { name: "description", content: "Search places, select campus boundaries or draw custom polygons and calculate area." }, { property: "og:title", content: "Interactive map — CarbonScope" }, { property: "og:description", content: "Geographical area selection on OpenStreetMap." }] }),
   component: MapPage,
 });
 
@@ -42,6 +42,7 @@ function MapPage() {
     setBusy(true);
     try {
       const r = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&polygon_geojson=1&limit=6&q=${encodeURIComponent(q)}`, { headers: { Accept: "application/json" } });
+      if (!r.ok) throw new Error("Search unavailable");
       const data: Place[] = await r.json();
       setResults(data);
       if (!data.length) toast.message("No places found");
@@ -79,10 +80,13 @@ function MapPage() {
                 const poly = p.geojson && /Polygon/.test(p.geojson.type);
                 return (
                   <li key={k}>
-                    <button disabled={!poly} onClick={() => apply({ type: "Feature", properties: { name: p.display_name }, geometry: p.geojson! }, p.display_name.split(",").slice(0, 2).join(","), scaleFor(p))} className="w-full rounded-md px-2 py-2 text-left text-sm hover:bg-secondary disabled:opacity-50">
+                    <Button variant="ghost" disabled={!poly} onClick={() => {
+                      if (!p.geojson || !/Polygon/.test(p.geojson.type)) return;
+                      apply({ type: "Feature", properties: { name: p.display_name }, geometry: p.geojson }, p.display_name.split(",").slice(0, 2).join(","), scaleFor(p));
+                    }} className="h-auto w-full flex-col items-start whitespace-normal px-2 py-2 text-left text-sm">
                       <span className="line-clamp-2">{p.display_name}</span>
                       <span className="text-xs text-muted-foreground">{scaleFor(p)} {poly ? "" : "· no boundary"}</span>
-                    </button>
+                    </Button>
                   </li>
                 );
               })}
@@ -104,7 +108,7 @@ function MapPage() {
                   const blob = new Blob([JSON.stringify({ type: "FeatureCollection", features: [d.boundary] })], { type: "application/geo+json" });
                   const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "boundary.geojson"; a.click();
                 }}>Download GeoJSON</Button>
-                <Button size="sm" variant="ghost" onClick={() => setDraft({ boundary: null })}>Clear</Button>
+                <Button size="sm" variant="ghost" onClick={() => setDraft((s) => ({ boundary: null, inputs: { ...s.inputs, areaM2: 0 } }))}>Clear</Button>
               </div>
             )}
             <p className="mt-4 text-xs text-muted-foreground">Boundary is saved with the assessment. Area is computed geodesically from the GeoJSON polygon.</p>

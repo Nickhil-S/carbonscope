@@ -3,7 +3,7 @@ import { ELECTRICITY_FACTORS, GREEN_FACTORS, METHODOLOGY_VERSION, TRANSPORT_FACT
 import { PageHeader, Panel } from "@/components/cs/ui";
 
 export const Route = createFileRoute("/methodology")({
-  head: () => ({ meta: [{ title: "Methodology — CarbonScope" }, { name: "description", content: "Calculation formulas, emission factors and data sources." }, { property: "og:title", content: "Methodology — CarbonScope" }, { property: "og:description", content: "How CarbonScope calculates emissions and indicators." }] }),
+  head: () => ({ meta: [{ property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }, { title: "Methodology — CarbonScope" }, { name: "description", content: "Calculation formulas, emission factors and data sources." }, { property: "og:title", content: "Methodology — CarbonScope" }, { property: "og:description", content: "How CarbonScope calculates emissions and indicators." }] }),
   component: Methodology,
 });
 
